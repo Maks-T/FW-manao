@@ -7,6 +7,8 @@ use FW\Core\Config;
 
 session_start();
 
+define('FW_CORE_INCLUDE', true);
+
 //function debugger
 require 'libs/helpers/dd.php';
 

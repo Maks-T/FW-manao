@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 require './../fw/init.php';
 
+if (!defined('FW_CORE_INCLUDE')) die;
+
 use FW\Core\App;
 use FW\Core\Multiton;
 
@@ -21,6 +23,11 @@ dd($mult::getInstance() === $mult)
 -------- 22.11.2022 --------
 1) создана минимальная структура файлов
 2) создан основной класс приложения
+
+-------- 23.11.2022 --------
+1) создан Multiton class
+2) добавлена константа подключения ядра (в init.php).
+
 
 </pre>
 
