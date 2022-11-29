@@ -13,6 +13,8 @@ define('FW_CORE_INCLUDE', true);
 require 'libs/helpers/dd.php';
 
 define('ROOT', __DIR__);
+define('ROOT_TEMLATES', __DIR__ . '/fw/template/');
+
 
 spl_autoload_register(function ($class) {
 
