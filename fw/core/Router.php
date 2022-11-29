@@ -17,7 +17,5 @@ class Router
     if (empty(self::$routes)) {
       self::$routes = require_once ROOT . '\routes.php';
     }
-
-    dd(self::$routes);
   }
 }

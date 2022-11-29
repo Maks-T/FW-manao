@@ -6,7 +6,7 @@ namespace FW\Core;
 
 use FW\Core\Config;
 
-class App
+class App extends Multiton
 {
   private $pager = null;
 
@@ -14,16 +14,8 @@ class App
 
   private $template = null;
 
-  private function __construct()
+  public function addPage(string $page)
   {
-    dd(Config::get('db/login'));
-  }
-
-  public static function getInstance()
-  {
-    if (null === self::$instance) {
-      self::$instance = new static();
-    }
-    return self::$instance;
+    $this->pager = $page;
   }
 }

@@ -5,10 +5,15 @@ declare(strict_types=1);
 require './../fw/init.php';
 
 use FW\Core\App;
-use FW\Core\Router;
+use FW\Core\Multiton;
 
-$app = App::getInstance();
-Router::match('www');
+$app = Multiton::getInstance(App::class);
+
+$mult = Multiton::getInstance();
+
+dd($app);
+
+dd($mult::getInstance() === $mult)
 
 ?>
 

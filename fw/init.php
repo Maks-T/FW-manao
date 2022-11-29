@@ -2,6 +2,9 @@
 
 declare(strict_types=1);
 
+use FW\Core\App;
+use FW\Core\Config;
+
 session_start();
 
 //function debugger
@@ -17,3 +20,11 @@ spl_autoload_register(function ($class) {
     require_once $file;
   }
 });
+
+$app = App::getInstance();
+$app->addPage('asdasdasdasd');
+
+
+dd($app);
+$config = Config::get('db/login');
+dd($config['db']['login']);
