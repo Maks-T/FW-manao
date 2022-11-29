@@ -19,7 +19,12 @@ class Config
     }
 
     $keys = explode('/', $path);
+    $config = self::$data;
 
-    return self::$data[$keys[0]][$keys[1]];
+    foreach ($keys as $key) {
+      $config = $config[$key];
+    }
+
+    return $config = self::$data;;
   }
 }

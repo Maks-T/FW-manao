@@ -4,9 +4,7 @@ declare(strict_types=1);
 
 namespace FW\Core;
 
-
 use FW\Core\Config;
-
 
 class App
 {
