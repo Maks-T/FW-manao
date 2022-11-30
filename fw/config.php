@@ -3,6 +3,9 @@
 return [
   'db' =>
   [
-    'login' => 'max'
+    'login' => ''
+  ],
+  'template' => [
+    'id' => 'common'
   ]
 ];

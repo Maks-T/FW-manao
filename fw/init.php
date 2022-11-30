@@ -10,11 +10,10 @@ session_start();
 define('FW_CORE_INCLUDE', true);
 
 //function debugger
-require 'libs/helpers/dd.php';
+require 'libs/helpers/index.php';
 
 define('ROOT', __DIR__);
-define('ROOT_TEMLATES', __DIR__ . '/fw/template/');
-
+define('ROOT_TEMLATES', __DIR__ . '/templates/');
 
 spl_autoload_register(function ($class) {
 
@@ -26,9 +25,4 @@ spl_autoload_register(function ($class) {
 });
 
 $app = App::getInstance();
-$app->addPage('asdasdasdasd');
 
-
-dd($app);
-$config = Config::get('db/login');
-dd($config['db']['login']);
