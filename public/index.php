@@ -36,6 +36,7 @@ $app->header();
     -------- 01.12.2022 --------
     1) изменил Multiton на InstanceContainer
     2) Исправил все классы
+    3) Добавил класс Dictionary
 
     </pre>
 
