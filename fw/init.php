@@ -17,12 +17,11 @@ define('ROOT_TEMLATES', __DIR__ . '/templates/');
 
 spl_autoload_register(function ($class) {
 
-  $file = ROOT . '/' . str_replace('FW\\', '/', $class) . '.php';
+    $file = ROOT . '/' . str_replace('FW\\', '/', $class) . '.php';
 
-  if (is_file($file)) {
-    require_once $file;
-  }
+    if (is_file($file)) {
+        require_once $file;
+    }
 });
 
-$app = App::getInstance();
 

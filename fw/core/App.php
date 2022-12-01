@@ -4,66 +4,65 @@ declare(strict_types=1);
 
 namespace FW\Core;
 
-use FW\Core\Config;
-use FW\Core\Page;
-
-class App extends Multiton
+class App
 {
-  const TEMPLATE_ID = 'template/id';
-  const FILE_HEADER = '/header.php';
-  const FILE_FOOTER = '/footer.php';
+    const TEMPLATE_ID = 'template/id';
+    const FILE_HEADER = '/header.php';
+    const FILE_FOOTER = '/footer.php';
 
-  private $isBufferStart = false;
+    private bool $isBufferStart = false;
 
-  private $page = null;
+    private ?Page $pager = null;
 
-  private static $instance = null;
+    private $template = null;
 
-  private $template = null;
+    public function __construct()
+    {
+        $this->pager = InstanceContainer::get(Page::class);
+    }
 
-  protected function __construct()
-  {
-    $this->page = Page::getInstance();   
-  }
-
-  public function renderHeader()
-  {   
-    $this->startBuffer();
-    include ROOT_TEMLATES . Config::get(self::TEMPLATE_ID) . self::FILE_HEADER;    
-  }
-
-  
-  public function renderfooter()
-  {
-    include ROOT_TEMLATES  . Config::get(self::TEMPLATE_ID) . self::FILE_FOOTER;
-    $content = $this->endBuffer();  
-
-    echo $content;
-  }
-
-  private function startBuffer()
-  {
-    ob_start();
-    $this->isBufferStart = true;
-  }
+    public function header(): void
+    {
+        $this->startBuffer();
+        include ROOT_TEMLATES . Config::get(self::TEMPLATE_ID) . self::FILE_HEADER;
+    }
 
 
-  private function endBuffer()
-  {
-    $content = ob_get_clean();
-    $this->isBufferStart = false;    
-    $replaces = $this->page->getAllReplace();   
-    $content = str_replace(array_keys($replaces), $replaces, $content);
+    public function footer()
+    {
+        include ROOT_TEMLATES . Config::get(self::TEMPLATE_ID) . self::FILE_FOOTER;
+        $content = $this->endBuffer();
 
-    return $content;
-  }
+        echo $content;
+    }
 
-  public function restartBuffer()
-  {
-    if ($this->isBufferStart === true) {
-      ob_clean();
-    } else {
-      $this->startBuffer();
-      }
-  }
+    private function startBuffer(): void
+    {
+        ob_start();
+        $this->isBufferStart = true;
+    }
+
+    private function endBuffer()
+    {
+        $content = ob_get_clean();
+        $this->isBufferStart = false;
+        $replaces = $this->pager->getAllReplace();
+        $content = str_replace(array_keys($replaces), $replaces, $content);
+
+        return $content;
+    }
+
+    public function restartBuffer(): void
+    {
+        if ($this->isBufferStart === true) {
+            ob_clean();
+        } else {
+            $this->startBuffer();
+        }
+    }
+
+    public function getPage(): Page
+    {
+        return $this->pager;
+    }
 }

@@ -2,26 +2,28 @@
 
 declare(strict_types=1);
 
-use FW\Core\Multiton;
-use FW\Core\Page;
+use FW\Core\App;
+use FW\Core\InstanceContainer;
 
-if (!defined('FW_CORE_INCLUDE')) die;
+if (!defined('FW_CORE_INCLUDE')) {
+    die;
+}
 
-$page = Multiton::getInstance(Page::class);
+$app = InstanceContainer::get(App::class);
 ?>
 
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">  
-  <title><?= $page->showProperty('title'); ?></title>
-  <?= $page->showHead(); ?>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><?= $app->getPage()->showProperty('title'); ?></title>
+    <?= $app->getPage()->showHead(); ?>
 </head>
 <body>
-  <?= $page->showProperty('title2'); ?>
-  <header><h2>Хеадер</h2></header>
-  <main>
+
+<header><h2>Header</h2></header>
+<main>
 
   
