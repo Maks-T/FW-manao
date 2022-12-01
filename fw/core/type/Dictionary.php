@@ -4,13 +4,11 @@ declare(strict_types=1);
 
 namespace FW\Core\Type;
 
-use Traversable;
-
 class Dictionary implements \IteratorAggregate, \ArrayAccess, \Countable, \JsonSerializable
 {
-    private bool $readonly = false;
+    private bool $readonly;
 
-    private array $container = [];
+    private array $container;
 
     public function __construct($values, bool $readonly = false)
     {
@@ -20,7 +18,7 @@ class Dictionary implements \IteratorAggregate, \ArrayAccess, \Countable, \JsonS
 
     public function get(string $name)
     {
-            isset($this->container[$name]) ?? $this->container[$name];
+        return isset($this->container[$name]) ?? $this->container[$name];
     }
 
     public function getIterator(): \ArrayIterator
