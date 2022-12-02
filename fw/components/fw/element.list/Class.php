@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace FW\Componets\FW;
+namespace FW\Components\FW;
 
 use FW\Core\Component\Base;
 

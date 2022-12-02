@@ -4,7 +4,7 @@ namespace FW\Core\Type;
 
 class Session extends Dictionary
 {
-  public function __construct($values, bool $readonly = false)
+  public function __construct()
   {
     parent::__construct($_SESSION);
   }

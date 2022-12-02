@@ -16,6 +16,16 @@ $app->getPage()->setProperty('title', 'Главная страница');
 $app->getPage()->addJs('./assets/js/script.js');
 $app->getPage()->addCss('./assets/css/styles.css');
 $app->header();
+
+$app->includeComponent(
+  'fw:element.list',
+  'default',
+  [
+    "sort" => "id",
+    "limit" => 10,
+    "show_title" => "N"
+  ]
+);
 ?>
 
     <pre>

@@ -13,6 +13,7 @@ class App
   const TEMPLATE_ID = 'template/id';
   const FILE_HEADER = '/header.php';
   const FILE_FOOTER = '/footer.php';
+  const COMPONENT_NAMESPACE = '\FW\Components\\';
 
   private bool $isBufferStart = false;
 
@@ -96,7 +97,30 @@ class App
 
   public function includeComponent(string $component, string $template, array $params)
   {
+    try {
+    $componentPath = ROOT_COMPONENTS . str_replace(':', '/',
+        $component) . '/Class.php';
 
+    if (!file_exists($componentPath)) {
+      throw new \Exception("Компонент $component не существует");
+    }
+
+    include_once $componentPath;
+
+    [$namespace, $className] = explode(':', $component);
+
+    $className = self::COMPONENT_NAMESPACE. $namespace . '\\' .classNameToCamelCase($className);
+
+    if (!class_exists($className)) {
+      throw new \Exception("Класс $className не существует");
+    }
+
+    $class = new $className();
+    dd($class);
+
+    } catch (\Exception $e) {
+      echo $e->getMessage();
+    }
   }
 
 }

@@ -6,7 +6,7 @@ namespace FW\Core\Type;
 
 class Request extends Dictionary
 {
-  public function __construct($values, bool $readonly = false)
+  public function __construct()
   {
     parent::__construct($_REQUEST, true);
   }
