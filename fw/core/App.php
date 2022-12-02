@@ -94,4 +94,9 @@ class App
     return $this->session;
   }
 
+  public function includeComponent(string $component, string $template, array $params)
+  {
+
+  }
+
 }
