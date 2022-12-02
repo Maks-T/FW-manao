@@ -6,22 +6,22 @@ namespace FW\Core;
 
 class InstanceContainer
 {
-    private static array $instances = [];
+  private static array $instances = [];
 
-    public static function get(string $class, ...$args)
-    {
-        if (empty(self::$instances[$class])) {
-            self::$instances[$class] = new $class(...$args);
-        }
-
-        return self::$instances[$class];
+  public static function get(string $class, ...$args)
+  {
+    if (empty(self::$instances[$class])) {
+      self::$instances[$class] = new $class(...$args);
     }
 
-    private function __clone()
-    {
-    }
+    return self::$instances[$class];
+  }
 
-    private function __construct()
-    {
-    }
+  private function __clone()
+  {
+  }
+
+  private function __construct()
+  {
+  }
 }
