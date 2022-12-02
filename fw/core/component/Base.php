@@ -6,40 +6,57 @@ namespace FW\Core\Component;
 
 abstract class Base
 {
-  /*
-  * array $result
-  * массив с результатом работы комопнента
-  */
+
+  /**
+   * @var array $result
+   * массив с результатом работы комопнента
+   */
   public array $result;
 
-  /*
-  * string $id
-  строковый id компонента
-  */
-  public string $id;
+  /**
+   * @var string $componentId
+   * строковый id компонента
+   */
+  public string $componentId;
 
-  /*
-  * array $params
-  * входящие параметры компонента
-  */
+  /**
+   * @var array $params
+   * входящие параметры компонента
+   */
   public array $params;
 
-  /*
-  * Template $template
-  * экземпляр класса шаблона компонента
-  */
+  /**
+   * @var Template|null $template
+   * экземпляр класса шаблона компонента
+   */
   public ?Template $template;
 
-  /*
+  /**
   * string $__path
   * путь к файловой структуре компонента
   */
   public string $__path;
 
-  public function __construct()
-  {
-  }
-
   abstract public function executeComponent();
+
+  /**
+   * @param string $componentId id строковый id компонента
+   * @param string $templateId id строковый id шаблона
+   * @param array $params входящие параметры компонента
+   * @param string $path путь к файловой структуре компонента
+   */
+  public function __construct(
+    string $componentId,
+    string $templateId,
+    array $params,
+    string $path
+  ) {
+    $this->componentId = $componentId;
+    $this->params = $params;
+    $this->__path = $path;
+
+    $this->template = new Template($templateId, $this);
+    $this->template->render();
+  }
 
 }

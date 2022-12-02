@@ -48,6 +48,11 @@ $app->includeComponent(
     2) Исправил все классы
     3) Добавил класс Dictionary
 
+    -------- 02.12.2022 --------
+    1) Добавил класс Component/Base
+    2) Добавил класс Component/Template
+    3) Добавил компонент element.list
+
     </pre>
 
 <?= $app->footer(); ?>

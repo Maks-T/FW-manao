@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace FW\Core;
 
+use FW\Core\Component\Base;
 use FW\Core\Type\Request;
 use FW\Core\Type\Server;
 use FW\Core\Type\Session;
@@ -14,6 +15,7 @@ class App
   const FILE_HEADER = '/header.php';
   const FILE_FOOTER = '/footer.php';
   const COMPONENT_NAMESPACE = '\FW\Components\\';
+  const COMPONENT_FILENAME_CLASS = '/Class.php';
 
   private bool $isBufferStart = false;
 
@@ -95,28 +97,36 @@ class App
     return $this->session;
   }
 
-  public function includeComponent(string $component, string $template, array $params)
+  public function includeComponent(string $componentId, string $templateId, array $params)
   {
     try {
-    $componentPath = ROOT_COMPONENTS . str_replace(':', '/',
-        $component) . '/Class.php';
 
-    if (!file_exists($componentPath)) {
-      throw new \Exception("Компонент $component не существует");
-    }
+      $componentDir = ROOT_COMPONENTS .
+        str_replace(':', '/', $componentId);
+      $componentPath = $componentDir . self::COMPONENT_FILENAME_CLASS;
 
-    include_once $componentPath;
+      if (!file_exists($componentPath)) {
+        throw new \Exception("Компонент $componentId не существует");
+      }
 
-    [$namespace, $className] = explode(':', $component);
+      include_once $componentPath;
 
-    $className = self::COMPONENT_NAMESPACE. $namespace . '\\' .classNameToCamelCase($className);
+      [$namespace, $className] = explode(':', $componentId);
 
-    if (!class_exists($className)) {
-      throw new \Exception("Класс $className не существует");
-    }
 
-    $class = new $className();
-    dd($class);
+      $classFullName = self::COMPONENT_NAMESPACE . $namespace . '\\' . classNameToCamelCase($className);
+
+      if (!class_exists($classFullName)) {
+        throw new \Exception("Класс $className не существует");
+      }
+
+      //ToDo сделать массив инстансов компонентов
+
+      /**
+       * @var Base $instanceComponent
+       */
+      $instanceComponent = new $classFullName($componentId, $templateId, $params, $componentDir);
+      $instanceComponent->executeComponent();
 
     } catch (\Exception $e) {
       echo $e->getMessage();
