@@ -9,25 +9,15 @@ session_start();
 
 define('FW_CORE_INCLUDE', true);
 
-//function debugger
-require 'libs/helpers/index.php';
+//include libs functions
+require 'libs/index.php';
 
 define('ROOT', __DIR__);
 define('ROOT_TEMLATES', __DIR__ . '/templates/');
 define('ROOT_COMPONENTS', __DIR__ . '/components/');
-define('ROOT_ASSETS_JS', dirname(__DIR__) . '/public/assets/components/js/');
-define('ROOT_ASSETS_CSS', dirname(__DIR__) . '/public/assets/components/css/');
-define('URL_ASSETS_JS', __DIR__ . '/assets/js/');
-define('URL_ASSETS_CSS', '/assets/css/');
-
-if (!(is_dir(ROOT_ASSETS_CSS))) {
-  mkdir(ROOT_ASSETS_CSS, 0777, true);
-}
-
-if (!(is_dir(ROOT_ASSETS_JS))) {
-  mkdir(ROOT_ASSETS_JS, 0777, true);;
-}
-
+define('ROOT_ASSETS', dirname(__DIR__) . '/public/assets/components/');
+define('URL_ASSETS', './assets/components/');
+define('ROOT_CHACHE', dirname(__DIR__) . '/cache/');
 
 spl_autoload_register(function ($class) {
 

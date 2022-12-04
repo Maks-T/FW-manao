@@ -26,6 +26,15 @@ $app->includeComponent(
     "show_title" => "N"
   ]
 );
+$app->includeComponent(
+  'fw:element.list',
+  'default',
+  [
+    "sort" => "id",
+    "limit" => 10,
+    "show_title" => "N"
+  ]
+);
 ?>
 
     <pre>
@@ -52,6 +61,17 @@ $app->includeComponent(
     1) Добавил класс Component/Base
     2) Добавил класс Component/Template
     3) Добавил компонент element.list
+
+    -------- 03.12.2022 --------
+    1) декомпозировал класс Component/Template
+    2) добавил URL JS CSS компонента на старницу
+
+    -------- 04.12.2022 --------
+    1) Добавил запрет на поторное подключение компонентов
+    2) Декомпозировал класс Component/Template
+    3) Добавил массив классов компонентов в App
+    4) Добавил phpDocs
+    4) Добавил phpDocs
 
     </pre>
 
