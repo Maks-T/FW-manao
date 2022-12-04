@@ -42,10 +42,10 @@ class Template
   private Page $page;
 
   /**
-   * @param string $templateId id шаблона
-   * @param Base $component инстанс компонента
    * В конструкторе мы должны указать жёскую зависимость от
    * компонента
+   * @param string $templateId id шаблона
+   * @param Base $component инстанс компонента
    */
   public function __construct(string $templateId, Base $component)
   {

@@ -17,7 +17,6 @@ define('ROOT_TEMLATES', __DIR__ . '/templates/');
 define('ROOT_COMPONENTS', __DIR__ . '/components/');
 define('ROOT_ASSETS', dirname(__DIR__) . '/public/assets/components/');
 define('URL_ASSETS', './assets/components/');
-define('ROOT_CHACHE', dirname(__DIR__) . '/cache/');
 
 spl_autoload_register(function ($class) {
 
