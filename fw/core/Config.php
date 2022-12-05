@@ -6,25 +6,27 @@ namespace FW\Core;
 
 class Config
 {
-  private static array $data = [];
+    const FILE_CONFIG = '\config.php';
 
-  private function __construct()
-  {
-  }
+    private static array $data = [];
 
-  public static function get(string $path)
-  {
-    if (empty(self::$data)) {
-      self::$data = require_once ROOT . '\config.php';
+    private function __construct()
+    {
     }
 
-    $keys = explode('/', $path);
-    $config = self::$data;
+    public static function get(string $path)
+    {
+        if (empty(self::$data)) {
+            self::$data = require_once ROOT . self::FILE_CONFIG;
+        }
 
-    foreach ($keys as $key) {
-      $config = $config[$key];
+        $keys = explode('/', $path);
+        $config = self::$data;
+
+        foreach ($keys as $key) {
+            $config = $config[$key];
+        }
+
+        return $config;
     }
-
-    return $config = self::$data;;
-  }
 }

@@ -4,22 +4,35 @@ declare(strict_types=1);
 
 require './../fw/init.php';
 
+if (!defined('FW_CORE_INCLUDE')) {
+    die;
+}
+
 use FW\Core\App;
-use FW\Core\Router;
+use FW\Core\InstanceContainer;
 
-$app = App::getInstance();
-Router::match('www');
-
+$app = InstanceContainer::get(App::class);
+$app->getPage()->setProperty('title', 'Главная страница');
+$app->getPage()->addJs('./assets/js/script.js');
+$app->getPage()->addCss('./assets/css/styles.css');
+$app->header();
 ?>
 
-<pre>
--------- 22.11.2022 --------
-1) создана минимальная структура файлов
-2) создан основной класс приложения
+    <pre>
+    -------- 28.11.2022 --------
+    1) создана минимальная структура файлов
+    2) создан основной класс приложения
 
-</pre>
+    -------- 29.11.2022 --------
+    1) создан Multiton class
+    2) добавлена константа подключения ядра (в init.php).
 
-<?php
+    -------- 30.11.2022 --------
+    1) создана структуры шаблона сайта
+    2) доработан App, внедрен буффер
+    3) создан класс Page
+    4) Добавлена инициализация Page в конструктор App в поле $page
 
+    </pre>
 
-?>
+<?= $app->footer(); ?>
