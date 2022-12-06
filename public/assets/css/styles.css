@@ -23,8 +23,7 @@ body {
     margin: 0;
     box-sizing: border-box;
     width: 100%;
-    min-height: 100vh;
-    overflow: hidden;
+    height: 100vh;
 
     background: url('./../images/fon.png') no-repeat center,
     linear-gradient(-135deg, #36b925, #4158d0);
@@ -80,5 +79,9 @@ pre {
     border-radius: 0.4rem;
     background-color: rgba(47, 79, 79, 0.55);
     font-family: Consolas, monospace;
+    max-width: 90vw;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+
 }
 

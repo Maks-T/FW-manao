@@ -6,27 +6,34 @@ namespace FW\Core;
 
 class Config
 {
-    const FILE_CONFIG = '\config.php';
+  const FILE_CONFIG = '\config.php';
 
-    private static array $data = [];
+  /**
+   * @var array $data данные из файла конфигурации
+   */
+  private static array $data = [];
 
-    private function __construct()
-    {
+  private function __construct()
+  {
+  }
+
+  /**
+   * @param string $path строка типа 'login/id';
+   * @return array|mixed значение параметра конфигурации
+   */
+  public static function get(string $path)
+  {
+    if (empty(self::$data)) {
+      self::$data = require_once ROOT . self::FILE_CONFIG;
     }
 
-    public static function get(string $path)
-    {
-        if (empty(self::$data)) {
-            self::$data = require_once ROOT . self::FILE_CONFIG;
-        }
+    $keys = explode('/', $path);
+    $config = self::$data;
 
-        $keys = explode('/', $path);
-        $config = self::$data;
-
-        foreach ($keys as $key) {
-            $config = $config[$key];
-        }
-
-        return $config;
+    foreach ($keys as $key) {
+      $config = $config[$key];
     }
+
+    return $config;
+  }
 }

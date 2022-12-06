@@ -6,77 +6,125 @@ namespace FW\Core;
 
 class Page
 {
-    const FW_MACRO_CSS = '#FW_MACRO_CSS#';
-    const FW_MACRO_JS = '#FW_MACRO_JS#';
-    const FW_MACRO_STR = '#FW_MACRO_STR#';
+  const FW_MACRO_CSS = '#FW_MACRO_CSS#';
+  const FW_MACRO_JS = '#FW_MACRO_JS#';
+  const FW_MACRO_STR = '#FW_MACRO_STR#';
 
-    private array $properties = [];
+  /**
+   * @var array $properties массив свойсв
+   */
+  private array $properties = [];
 
-    private array $scripts = [];
+  /**
+   * @var array $scripts массив src скриптов
+   */
+  private array $scripts = [];
 
-    private array $links = [];
+  /**
+   * @var array $links массив links
+   */
+  private array $links = [];
 
-    private array $strings = [];
+  /**
+   * @var array $strings массив строк
+   */
+  private array $strings = [];
 
-    //добавляет src в массив сохраняя уникальность
-    public function addJs(string $src): void
-    {
-        addUniqueStrToArray($src, $this->scripts);
-    }
+  /**
+   * добавляет src в массив сохраняя уникальность
+   * @param string $src
+   * @return void
+   */
+  public function addJs(string $src): void
+  {
+    addUniqueStrToArray($src, $this->scripts);
+  }
 
-    //добавляет link сохраняя уникальность
-    public function addCss(string $link): void
-    {
-        addUniqueStrToArray($link, $this->links);
-    }
+  /**
+   * добавляет link сохраняя уникальность
+   * @param string $link
+   * @return void
+   */
+  public function addCss(string $link): void
+  {
+    addUniqueStrToArray($link, $this->links);
+  }
 
-    // добавляет в массив для хранения
-    public function addString(string $str): void
-    {
-        addUniqueStrToArray($str, $this->strings);
-    }
+  /**
+   * добавляет строку в массив для хранения
+   * @param string $str
+   * @return void
+   */
+  public function addString(string $str): void
+  {
+    addUniqueStrToArray($str, $this->strings);
+  }
 
-    // добавляет для хранениезначение по ключу
-    public function setProperty(string $id, mixed $value): void
-    {
-        $this->properties[$this->getPropMacro($id)] = $value . '\r\n';
-    }
+  /**
+   * добавляет для хранение значение по ключу
+   * @param string $id
+   * @param mixed $value
+   * @return void
+   */
+  public function setProperty(string $id, mixed $value): void
+  {
+    $this->properties[$this->getPropMacro($id)] = $value . '\r\n';
+  }
 
-    // получение по ключу
-    public function getProperty(string $id): ?string
-    {
-        return $this->properties[$this->getPropMacro($id)] ?? null;
-    }
+  /**
+   * получение значения по ключу
+   * @param string $id
+   * @return string|null
+   */
+  public function getProperty(string $id): ?string
+  {
+    return $this->properties[$this->getPropMacro($id)] ?? null;
+  }
 
-    // выводит макрос для будущей замены
-    public function showProperty(string $id): void
-    {
-        echo !is_null($this->getProperty($id)) ? $this->getPropMacro($id) : '';
-    }
+  /**
+   * выводит макрос для будущей замены
+   * @param string $id
+   * @return void
+   */
+  public function showProperty(string $id): void
+  {
+    echo !is_null($this->getProperty($id)) ? $this->getPropMacro($id) : '';
+  }
 
-    // получает массив макросов и значений для замены
-    public function getAllReplace(): array
-    {
-        $replaces[self::FW_MACRO_CSS] = implode('',
-            array_map(fn($src) => "<script src=\"{$src}\"></script>\r\n", $this->scripts));
-        $replaces[self::FW_MACRO_JS] = implode('',
-            array_map(fn($link) => "<link href=\"{$link}\" rel=\"stylesheet\">\r\n", $this->links));
+  /**
+   * получает массив макросов и значений для замены
+   * @return array
+   */
+  public function getAllReplace(): array
+  {
+    $replaces[self::FW_MACRO_CSS] = implode('',
+      array_map(fn($src) => "<script src=\"{$src}\"></script>\r\n", $this->scripts));
+    $replaces[self::FW_MACRO_JS] = implode('',
+      array_map(fn($link) => "<link href=\"{$link}\" rel=\"stylesheet\">\r\n", $this->links));
 
-        $replaces[self::FW_MACRO_STR] = implode('', array_map(fn($src) => $str . '\r\n', $this->strings));
+    $replaces[self::FW_MACRO_STR] = implode('', array_map(fn($str) => $str . '\r\n', $this->strings));
 
-        return array_merge($replaces, $this->properties);
-    }
+    return array_merge($replaces, $this->properties);
+  }
 
-    // выводит 3 макроса замены CSS / STR / JS
-    public function showHead(): void
-    {
-        echo self::FW_MACRO_CSS;
-        echo self::FW_MACRO_JS;
-        echo self::FW_MACRO_STR;
-    }
+  /**
+   * выводит 3 макроса замены CSS / STR / JS
+   * @return void
+   */
+  public function showHead(): void
+  {
+    echo self::FW_MACRO_CSS;
+    echo self::FW_MACRO_JS;
+    echo self::FW_MACRO_STR;
+  }
 
-    private function getPropMacro($id): string
-    {
-        return "#FW_PAGE_PROPERY_{$id}#";
-    }
+  /**
+   * возвражает строку макроса свойства
+   * @param $id
+   * @return string
+   */
+  private function getPropMacro($id): string
+  {
+    return "#FW_PAGE_PROPERY_{$id}#";
+  }
 }
