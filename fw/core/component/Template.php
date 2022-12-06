@@ -6,7 +6,7 @@ namespace FW\Core\Component;
 
 use Exception;
 use FW\Core\InstanceContainer;
-use FW\Core\Page;
+use FW\Core\App;
 
 class Template
 {
@@ -37,9 +37,9 @@ class Template
   private Base $component;
 
   /**
-   * @var Page экземляр страницы для добавления js, css
+   * @var App экземляр приложения для добавления js, css
    */
-  private Page $page;
+  private App $app;
 
   /**
    * В конструкторе мы должны указать жёскую зависимость от
@@ -62,7 +62,7 @@ class Template
       echo $e->getMessage();
     }
 
-    $this->page = InstanceContainer::get(Page::class);
+    $this->app = InstanceContainer::get(App::class);
   }
 
   /**
@@ -163,14 +163,7 @@ class Template
     $scriptPathAsset = $сomponentAssetsDir . self::FILENAME_SCRIPT;
 
     if (file_exists($filenameScript)) {
-
-      if (!file_exists($scriptPathAsset)) {
-        if (!copy($filenameScript, $scriptPathAsset)) {
-          throw new Exception("Файл стрипта компонета {$this->component->componentId} не перемещен");
-        }
-      }
-
-      $this->page->addJs($this->__relativePath . "script.js");
+      $this->app->getSciptsBundler()->addFile($this->component->componentId, $filenameScript);
     }
   }
 
@@ -187,14 +180,7 @@ class Template
     $stylePathAsset = $сomponentAssetsDir . self::FILENAME_STYLE;
 
     if (file_exists($filenameStyle)) {
-
-      if (!file_exists($stylePathAsset)) {
-        if (!copy($filenameStyle, $stylePathAsset)) {
-          throw new Exception("Файл стиля компонента {$this->component->componentId} не перемещен");
-        }
-      }
-
-      $this->page->addCss($this->__relativePath . "style.css");
+      $this->app->getStylesBundler()->addFile($this->component->componentId, $filenameStyle);
     }
   }
 

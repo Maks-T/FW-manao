@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace FW\Core;
 
+use FW\Core\Bundler\Bundler;
+use FW\Core\Bundler\Cache;
 use FW\Core\Component\Base;
 use FW\Core\Type\Request;
 use FW\Core\Type\Server;
@@ -47,12 +49,18 @@ class App
    */
   private array $components;
 
+  private Bundler $scriptsBundler;
+
+  private Bundler $stylesBundler;
+
   public function __construct()
   {
     $this->pager = InstanceContainer::get(Page::class);
     $this->request = InstanceContainer::get(Request::class);
     $this->server = InstanceContainer::get(Server::class);
     $this->session = InstanceContainer::get(Session::class);
+    $this->scriptsBundler = new Bundler(ROOT_ASSETS . '/js/', 'scripts.bundle', 'js');
+    $this->stylesBundler = new Bundler(ROOT_ASSETS . '/css/', 'styles.bundle', 'css');
   }
 
   /**
@@ -72,6 +80,17 @@ class App
   public function footer()
   {
     include ROOT_TEMLATES . Config::get(self::TEMPLATE_ID) . self::FILE_FOOTER;
+
+    $this->scriptsBundler->bundle();
+    $this->stylesBundler->bundle();
+
+    if ($this->scriptsBundler->getBundleFileName()) {
+      $this->pager->addJs(URL_ASSETS . 'js/' . $this->scriptsBundler->getBundleFileName());
+    }
+    if ($this->stylesBundler->getBundleFileName()) {
+      $this->pager->addCss(URL_ASSETS . 'css/' .  $this->stylesBundler->getBundleFileName());
+    }
+
     $content = $this->endBuffer();
 
     echo $content;
@@ -198,6 +217,16 @@ class App
     } catch (\Exception $e) {
       echo $e->getMessage();
     }
+  }
+
+  public function getSciptsBundler()
+  {
+    return $this->scriptsBundler;
+  }
+
+  public function getStylesBundler()
+  {
+    return $this->stylesBundler;
   }
 
 }
