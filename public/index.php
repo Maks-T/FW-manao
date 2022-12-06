@@ -12,9 +12,12 @@ use FW\Core\App;
 use FW\Core\InstanceContainer;
 
 $app = InstanceContainer::get(App::class);
-$app->getPage()->setProperty('title', 'Главная страница');
-$app->getPage()->addJs('./assets/js/script.js');
-$app->getPage()->addCss('./assets/css/styles.css');
+$page = $app->getPage();
+$page->setProperty('title', 'Главная страница');
+$page->addJs('./assets/js/script.js');
+$page->addJs('./assets/js/bootstrap.bundle.min.js');
+$page->addCss('./assets/css/styles.css');
+$page->addCss('./assets/css/bootstrap.min.css');
 $app->header();
 
 $app->includeComponent(
@@ -71,7 +74,13 @@ $app->includeComponent(
     2) Декомпозировал класс Component/Template
     3) Добавил массив классов компонентов в App
     4) Добавил phpDocs
-    4) Добавил phpDocs
+    -------- 05.12.2022 --------
+    1) Убрал вызов метода Render() из класса Base
+    2) Убрал лишние методы в Template
+    -------- 06.12.2022 --------
+    1) Добавил сборщик файлов стилей и скриптов
+    2) Добавил кеширование изменений файлов стилей и скриптов в сборщик
+    3) Добавил стили и скрипты бутстрапа на страницу
 
     </pre>
 

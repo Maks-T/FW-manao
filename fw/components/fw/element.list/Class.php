@@ -15,6 +15,6 @@ class ElementList extends Base
    */
   public function executeComponent()
   {
-    // TODO: Implement executeComponent() method.
+    $this->template->render();
   }
 }
