@@ -9,16 +9,16 @@ use FW\Core\Component\Template;
 $params = &$this->component->params;
 
 $mapComponent = [
-  'text' => 'inteface.input.text',
-  'text_multiple' => 'inteface.input.text.multiple',
-  'number' => 'inteface.input.number',
-  'password' => 'inteface.input.password',
-  'checkbox' => 'inteface.input.checkbox',
-  'checkbox_multiple' => 'inteface.input.checkbox.multiple',
-  'input.radio' => 'inteface.input.radio',
-  'select' => 'inteface.select',
-  'select_multiple' => 'inteface.select.multiple',
-  'textarea' => 'inteface.textarea'
+  'text' => 'fw:interface.input.text',
+  'text_multiple' => 'fw:interface.input.text.multiple',
+  'number' => 'fw:interface.input.number',
+  'password' => 'fw:interface.input.password',
+  'checkbox' => 'fw:interface.input.checkbox',
+  'checkbox_multiple' => 'fw:interface.input.checkbox.multiple',
+  'input.radio' => 'fw:interface.input.radio',
+  'select' => 'fw:interface.select',
+  'select_multiple' => 'fw:interface.select.multiple',
+  'textarea' => 'fw:interface.textarea'
 ];
 
 /**
@@ -47,5 +47,3 @@ function modificateParams(&$params, $mapComponent): void
 }
 
 modificateParams($params, $mapComponent);
-
-dd($params);
