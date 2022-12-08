@@ -11,6 +11,7 @@ if (!defined('FW_CORE_INCLUDE')) {
 use FW\Core\App;
 use FW\Core\InstanceContainer;
 
+
 $app = InstanceContainer::get(App::class);
 $page = $app->getPage();
 $page->setProperty('title', 'Главная страница');

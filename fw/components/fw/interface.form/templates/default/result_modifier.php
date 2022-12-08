@@ -8,10 +8,6 @@ use FW\Core\Component\Template;
 
 $params = &$this->component->params;
 
-if (array_key_exists('additional_class', $params)) {
-  $params['class'] = $params['additional_class'];
-}
-
 $mapComponent = [
   'text' => 'inteface.input.text',
   'text_multiple' => 'inteface.input.text.multiple',
@@ -25,15 +21,31 @@ $mapComponent = [
   'textarea' => 'inteface.textarea'
 ];
 
-if (array_key_exists('elements', $params)) {
-  foreach ($params['elements'] as &$element) {
+/**
+ * @param $params входящие параметры компонета для изменения
+ * @param $mapComponent карта привязки наименований компонентов к типу элемента
+ * @return void
+ */
+function modificateParams(&$params, $mapComponent): void
+{
+  if (array_key_exists('additional_class', $params)) {
+    $params['class'] = $params['additional_class'];
+  }
 
-    if (
-      array_key_exists('type', $element) &&
-      array_key_exists($element['type'], $mapComponent)
-    ) {
-      $element['component_name'] = $mapComponent[$element['type']];
+  if (array_key_exists('elements', $params)) {
+    foreach ($params['elements'] as &$element) {
+      if (
+        array_key_exists('type', $element) &&
+        array_key_exists($element['type'], $mapComponent)
+      ) {
+        $element['component_name'] = $mapComponent[$element['type']];
+      }
+
+      modificateParams($element, $mapComponent);
     }
   }
 }
 
+modificateParams($params, $mapComponent);
+
+dd($params);

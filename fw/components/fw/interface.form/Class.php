@@ -4,36 +4,13 @@ declare(strict_types=1);
 
 namespace FW\Components\FW;
 
-use FW\Core\Component\Base;
+use FW\Core\Component\InterfaceComponent;
 
-class InterfaceForm extends Base
+
+class InterfaceForm extends InterfaceComponent
 {
-
- public function __get($name)
- {
-   return $this->params[strtolower($name)] ?? '';
- }
-
- public function getAttr(): string
- {
-   $strAttr = '';
-
-   if (array_key_exists('attr', $this->params)) {
-     foreach($this->params['attr'] as $attr => $value)
-     {
-       $strAttr .= " $attr=\"$value\"";
-     }
-   }
-
-   return $strAttr;
- }
-
-  /**
-   * Запускает компонент
-   * @return void
-   */
   public function executeComponent()
   {
-    $this->template->render();
+    parent::executeComponent();
   }
 }
