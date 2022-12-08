@@ -5,7 +5,7 @@ declare(strict_types=1);
 require './../fw/init.php';
 
 if (!defined('FW_CORE_INCLUDE')) {
-    die;
+  die;
 }
 
 use FW\Core\App;
@@ -21,26 +21,38 @@ $page->addCss('./assets/css/bootstrap.min.css');
 $app->header();
 
 $app->includeComponent(
-  'fw:element.list',
+  'fw:interface.form',
   'default',
   [
-    "sort" => "id",
-    "limit" => 10,
-    "show_title" => "N"
-  ]
-);
-$app->includeComponent(
-  'fw:element.list',
-  'default',
-  [
-    "sort" => "id",
-    "limit" => 10,
-    "show_title" => "N"
+    'title' => 'Форма InterfaceForm',
+    'additional_class' => 'window--full-form', //доп класс на контейнер формы
+    'attr' => [  // доп атрибуты
+      'data-form-id' => 'form-123'
+    ],
+    'method' => 'post',
+    'action' => '', //url отправки
+    'elements' => [  //список элементов формы
+      [
+        'type' => 'text',
+        'name' => 'login',
+        'additional_class' => 'js-login',
+        'attr' => [
+          'data-id' => '17'
+        ],
+        'title' => 'Логин',
+        'default' => 'Введите имя'
+      ],
+      [
+        'type' => 'password',
+        'name' => 'password',
+        'title' => 'пароль'
+      ]
+    ]
   ]
 );
 ?>
 
-    <pre>
+    <pre class="row">
     -------- 28.11.2022 --------
     1) создана минимальная структура файлов
     2) создан основной класс приложения
@@ -81,6 +93,8 @@ $app->includeComponent(
     1) Добавил сборщик файлов стилей и скриптов
     2) Добавил кеширование изменений файлов стилей и скриптов в сборщик
     3) Добавил стили и скрипты бутстрапа на страницу
+    -------- 07.12.2022 --------
+    1) Добавил компонент 'interface.form'
 
     </pre>
 
