@@ -14,7 +14,7 @@ $app = InstanceContainer::get(App::class);
 
 ?>
 <div class="row justify-content-center">
-    <div class="col-5">
+    <div class="col-12 col-xl-5 col-md-8">
         <form class="mb-3 p-2 border border-primary rounded px-4 py-2 <?= $cmnt->class ?>"
               action="<?= $cmnt->action ?>"
               method="<?= $cmnt->method ?>"
