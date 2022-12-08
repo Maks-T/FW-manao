@@ -1,1 +1,1 @@
-console.log('fw.element.list.script.js load 4');
+console.log('fw.element.list.script.js load 1');

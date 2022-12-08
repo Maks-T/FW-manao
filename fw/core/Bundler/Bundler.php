@@ -6,20 +6,45 @@ namespace FW\Core\Bundler;
 
 class Bundler
 {
+  /**
+   * @var array $fileNames пути к файлам для сборки
+   */
   private array $fileNames = [];
-
+  /**
+   * @var string $bundleDir имя директории сборки
+   */
   private string $bundleDir;
 
+  /**
+   * @var string $nameMaskBundleFile маска файла сборки
+   */
   private string $nameMaskBundleFile;
 
+  /**
+   * @var string $typeFile тип файла (js, css, ...)
+   */
   private string $typeFile;
 
+  /**
+   * @var string $bundleFileName имя файла сборки
+   */
   private string $bundleFileName;
 
-  private string $content = '';
-
+  /**
+   * @var Cache $cache экземляра класса для работы с кешированием
+   */
   private Cache $cache;
 
+  /**
+   * @var string содержимое файлов для сборки
+   */
+  private string $content = '';
+
+  /**
+   * @param string $bundleDir имя директории сборки
+   * @param string $nameMaskBundleFile маска файла сборки
+   * @param string $typeFile тип файла (js, css, ...)
+   */
   public function __construct(string $bundleDir, string $nameMaskBundleFile, string $typeFile)
   {
     $this->bundleDir = $bundleDir;
@@ -31,32 +56,41 @@ class Bundler
     $this->cache = new Cache($this->typeFile);
   }
 
-  public function addFile(string $key, string $fileName)
+  /**
+   * @param string $key ключ для кеширования (имя компонента)
+   * @param string $filePath путь к отслеживаемому файлу
+   * @return void
+   */
+  public function addFile(string $key, string $filePath)
   {
-    $this->cache->addFile($key, $fileName);
-    $this->fileNames[$key] = $fileName;
+    $this->cache->addFile($key, $filePath);
+    $this->fileNames[$key] = $filePath;
   }
 
-  public function bundle()
+  /**
+   * Собрать и сохранить файл если кеш изменен
+   * @return void
+   */
+  public function bundle(): void
   {
-    $bundleFileName = $this->cache->saveCache($this->bundleFileName);
+    $fileNamePrevBundle = $this->cache->getFileNamePrevBundle();
 
-    $previousBandleFilePath = $this->bundleDir . $bundleFileName;
+    //если данные о файлах обновились и закешировались
+    if ($this->cache->saveCache($this->bundleFileName)) {
 
-    if ($bundleFileName === $this->bundleFileName) {
+      //удалить предыдущую сборку     
+      if ($fileNamePrevBundle && file_exists($this->bundleDir . $fileNamePrevBundle)) {
 
-      //удалить предыдущую сборку
-      if (file_exists($previousBandleFilePath)) {
-        unlink($previousBandleFilePath);
+        unlink($this->bundleDir . $fileNamePrevBundle);
       }
 
-      foreach ($this->fileNames as $fileName) {
+      foreach ($this->fileNames as $filePath) {
         try {
-          if (!file_exists($fileName)) {
-            throw new \Exception("Файл $fileName не существует");
+          if (!file_exists($filePath)) {
+            throw new \Exception("Файл $filePath не существует");
           }
 
-          $this->content .= file_get_contents($fileName);
+          $this->content .= file_get_contents($filePath);
 
           if (!file_put_contents($this->bundleDir . $this->bundleFileName, $this->content)) {
             throw new \Exception("Файл $this->bundleFileName не создан");
@@ -68,10 +102,17 @@ class Bundler
       return;
     }
 
-    $this->bundleFileName = $bundleFileName;
+    if ($fileNamePrevBundle) {
+      $this->bundleFileName = $fileNamePrevBundle;
+    }
+
   }
 
-  public function getBundleFileName()
+  /**
+   * Вернуть имя файла сборки для добавления на страницу
+   * @return string
+   */
+  public function getBundleFileName(): string
   {
     return $this->bundleFileName;
   }

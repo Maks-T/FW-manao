@@ -23,7 +23,8 @@ $app = InstanceContainer::get(App::class);
 </head>
 <body>
 
-<header><h2>Header</h2></header>
-<main>
+<header class="bg-primary text-white p-1 text-center"><h2>Header</h2></header>
+<div class="container  mt-2">
+ <main class="row p-2">
 
   

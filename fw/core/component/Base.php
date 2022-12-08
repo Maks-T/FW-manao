@@ -56,7 +56,6 @@ abstract class Base
     $this->__path = $path;
 
     $this->template = new Template($templateId, $this);
-    $this->template->render();
   }
 
 }

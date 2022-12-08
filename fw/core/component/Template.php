@@ -44,6 +44,7 @@ class Template
   /**
    * В конструкторе мы должны указать жёскую зависимость от
    * компонента
+   *
    * @param string $templateId id шаблона
    * @param Base $component инстанс компонента
    */
@@ -74,10 +75,16 @@ class Template
   function render(string $page = "template"): void
   {
     try {
-      $this->includeResultModifier();
+      $filenameResultModifier = $this->__path . self::FILENAME_RESULT_MODIFIER;
+      $this->includeOptionalTemplateFile($filenameResultModifier);
+
       $this->includeComponentTemplate($page);
-      $this->includeComponentEpilog();
-      $this->includeAssets($page);
+
+      $filenameComponentEpilog = $this->__path . self::FILENAME_EPILOG;
+      $this->includeOptionalTemplateFile($filenameComponentEpilog);
+
+      $this->includeJS();
+      $this->includeCSS();
 
     } catch (Exception $e) {
       echo $e->getMessage();
@@ -85,38 +92,20 @@ class Template
   }
 
   /**
-   * подключает файл для модификации
-   * данных работы компонента
-   * если файл существует
+   * Подключает неоябзательные файлы шаблона
    *
+   * @param $filePath путь к файлу
    * @return void
    */
-  private function includeResultModifier()
+  private function includeOptionalTemplateFile(string $filePath)
   {
-    $filenameResultModifier = $this->__path . self::FILENAME_RESULT_MODIFIER;
-
-    if (file_exists($filenameResultModifier)) {
-      include $filenameResultModifier;
+    if (file_exists($filePath)) {
+      include $filePath;
     }
   }
 
   /**
-   * подключает файл эпилога компонета
-   * если файл существует
-   *
-   * @return void
-   */
-  private function includeComponentEpilog()
-  {
-    $filenameComponentEpilog = $this->__path . self::FILENAME_EPILOG;
-
-    if (file_exists($filenameComponentEpilog)) {
-      include $filenameComponentEpilog;
-    }
-  }
-
-  /**
-   * подключает компонент шаблона на страницу
+   * подключает обязательный компонент шаблона на страницу
    *
    * @param string $page страница подключения в шаблоне
    * @return void
@@ -132,35 +121,14 @@ class Template
   }
 
   /**
-   * Подключает и копирует в публичное пространство
-   * файлы скриптов и стилей
+   * Добавляет файл скрипта js в сборку если такой имеется
    *
-   * @return void
-   * @throws Exception Файл стиля и(или) скрипта компонета не перемещен
-   */
-  private function includeAssets()
-  {
-    $сomponentAssetsDir = ROOT_ASSETS . '/' . str_replace(':', '/', $this->component->componentId) . '/';
-
-    if (!(is_dir($сomponentAssetsDir))) {
-      mkdir($сomponentAssetsDir, 0777, true);
-    }
-
-    $this->includeJS($сomponentAssetsDir);
-    $this->includeCSS($сomponentAssetsDir);
-  }
-
-  /**
-   * Подключает и копирует в публичное пространство
-   * файл скрипта
-   * @param string $сomponentAssetsDir url директории для assets
    * @return void
    * @throws Exception Файл стрипта компонета не перемещен
    */
-  private function includeJS(string $сomponentAssetsDir)
+  private function includeJS()
   {
     $filenameScript = $this->__path . self::FILENAME_SCRIPT;
-    $scriptPathAsset = $сomponentAssetsDir . self::FILENAME_SCRIPT;
 
     if (file_exists($filenameScript)) {
       $this->app->getSciptsBundler()->addFile($this->component->componentId, $filenameScript);
@@ -168,16 +136,15 @@ class Template
   }
 
   /**
-   * Подключает и копирует в публичное пространство
+   * Добавляет файл стилей css в сборку если такой имеется
    * файл стиля
-   * @param string $сomponentAssetsDir url директории для assets
+   *
    * @return void
    * @throws Exception Файл стиля компонета не перемещен
    */
-  private function includeCSS(string $сomponentAssetsDir)
+  private function includeCSS()
   {
     $filenameStyle = $this->__path . self::FILENAME_STYLE;
-    $stylePathAsset = $сomponentAssetsDir . self::FILENAME_STYLE;
 
     if (file_exists($filenameStyle)) {
       $this->app->getStylesBundler()->addFile($this->component->componentId, $filenameStyle);

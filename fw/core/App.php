@@ -81,6 +81,7 @@ class App
   {
     include ROOT_TEMLATES . Config::get(self::TEMPLATE_ID) . self::FILE_FOOTER;
 
+    //собрать assets компонентов
     $this->scriptsBundler->bundle();
     $this->stylesBundler->bundle();
 
