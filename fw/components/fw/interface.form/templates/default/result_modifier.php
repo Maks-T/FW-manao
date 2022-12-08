@@ -10,12 +10,12 @@ $params = &$this->component->params;
 
 $mapComponent = [
   'text' => 'fw:interface.input.text',
-  'text_multiple' => 'fw:interface.input.text.multiple',
+  'input_multiple' => 'fw:interface.input.multiple',
   'number' => 'fw:interface.input.number',
   'password' => 'fw:interface.input.password',
   'checkbox' => 'fw:interface.input.checkbox',
   'checkbox_multiple' => 'fw:interface.input.checkbox.multiple',
-  'input.radio' => 'fw:interface.input.radio',
+  'radio' => 'fw:interface.input.radio',
   'select' => 'fw:interface.select',
   'select_multiple' => 'fw:interface.select.multiple',
   'textarea' => 'fw:interface.textarea'

@@ -21,7 +21,7 @@ $app = InstanceContainer::get(App::class);
           <?= $cmnt->getAttr(); ?>
         >
             <div class="row">
-                <p class="fs-3 fw-bold text-center "><?= $cmnt->title ?></p>
+                <legend class="fs-3 fw-bold text-center "><?= $cmnt->title ?></legend>
             </div>
             <div class="row">
               <?php

@@ -1,10 +1,10 @@
 <?php
 /** @var  Template $this */
-/** @var  InterfaceInputText $cmnt */
+/** @var  InterfaceInputPassword $cmnt */
 
 declare(strict_types=1);
 
-use \FW\Components\FW\InterfaceInputText;
+use FW\Components\FW\InterfaceInputPassword;
 use FW\Core\Component\Template;
 
 $cmnt = $this->component;

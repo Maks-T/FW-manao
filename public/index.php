@@ -46,7 +46,117 @@ $app->includeComponent(
       [
         'type' => 'password',
         'name' => 'password',
-        'title' => 'пароль'
+        'title' => 'пароль',
+        'default' => 'Введите пароль'
+      ],
+      [
+        'type' => 'number',
+        'name' => 'number',
+        'title' => 'возраст',
+        'default' => 'Введите возраст'
+      ],
+      [
+        'type' => 'input_multiple',
+        'name' => 'input_multiple',
+        'title' => 'дополнительные параметры',
+        'additional_class' => 'input-multiple',
+        'elements' =>
+          [  //список элементов input_multiple
+            [
+              'type' => 'text',
+              'name' => 'input_multiple_login',
+              'attr' => [
+                'data-id' => '18'
+              ],
+              'title' => 'Логин',
+              'default' => 'Введите имя'
+            ],
+            [
+              'type' => 'password',
+              'name' => 'input_multiple_password',
+              'title' => 'пароль',
+              'default' => 'Введите пароль'
+            ],
+            [
+              'type' => 'number',
+              'name' => 'input_multiple_number',
+              'title' => 'возраст',
+              'default' => 'Введите возраст'
+            ]
+          ]
+      ],
+      [
+        'type' => 'checkbox',
+        'name' => 'single_checkbox',
+        'title' => 'одиночный checkbox',
+        'id' => 'flexCheckDefault',
+        'checked' => ''
+      ],
+      [
+        'type' => 'checkbox_multiple',
+        'name' => 'checkbox_multiple',
+        'title' => 'CheckBox multiple',
+        'elements' => [
+          [
+            'type' => 'checkbox',
+            'name' => 'one_checkbox',
+            'title' => 'первый checkbox',
+            'id' => 'one_checkbox',
+            'checked' => ''
+          ],
+          [
+            'type' => 'checkbox',
+            'name' => 'second_checkbox',
+            'title' => 'второй checkbox',
+            'id' => 'second_checkbox',
+          ],
+          [
+            'type' => 'checkbox',
+            'name' => 'third_checkbox',
+            'title' => 'третий checkbox',
+            'id' => 'third_checkbox',
+            'checked' => ''
+          ],
+          [
+            'type' => 'checkbox',
+            'name' => 'forth_checkbox',
+            'title' => 'четвертый checkbox',
+            'id' => 'forth_checkbox',
+
+          ],
+
+        ],
+      ],
+      [
+        'type' => 'radio',
+        'name' => 'single_radio',
+        'title' => 'одиночный radio button',
+        'id' => 'flexRadioDefault',
+        'checked' => ''
+      ],
+      [
+        'type' => 'select',
+        'name' => 'select',
+        'title' => 'элемент Select',
+        'selected' => 'value2',
+        'options' => [
+          'value1' => 'Значение 1',
+          'value2' => 'Значение 2',
+          'value3' => 'Значение 3',
+          'value4' => 'Значение 4',
+        ]
+      ],
+      [
+        'type' => 'select_multiple',
+        'name' => 'select_multiple',
+        'title' => 'элемент Select Multiple',
+        'selected' => ['value2', 'value4'],
+        'options' => [
+          'value1' => 'Значение 1',
+          'value2' => 'Значение 2',
+          'value3' => 'Значение 3',
+          'value4' => 'Значение 4',
+        ]
       ]
     ]
   ]
@@ -96,6 +206,8 @@ $app->includeComponent(
     3) Добавил стили и скрипты бутстрапа на страницу
     -------- 07.12.2022 --------
     1) Добавил компонент 'interface.form'
+    -------- 08.12.2022 --------
+    1) Добавил остальные interface компоненты
 
     </pre>
 
