@@ -11,7 +11,6 @@ if (!defined('FW_CORE_INCLUDE')) {
 use FW\Core\App;
 use FW\Core\InstanceContainer;
 
-
 $app = InstanceContainer::get(App::class);
 $page = $app->getPage();
 $page->setProperty('title', 'Главная страница');
@@ -163,6 +162,7 @@ $app->includeComponent(
 );
 ?>
 
+
     <pre class="row">
     -------- 28.11.2022 --------
     1) создана минимальная структура файлов
@@ -208,6 +208,8 @@ $app->includeComponent(
     1) Добавил компонент 'interface.form'
     -------- 08.12.2022 --------
     1) Добавил остальные interface компоненты
+    2) Добавил классы валидаторы
+
 
     </pre>
 
